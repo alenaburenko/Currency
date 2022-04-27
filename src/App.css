@@ -1,0 +1,20 @@
+body{
+    background-color: #161616;
+    color: #ddd;
+    /* padding: 50px; */
+}
+h1{
+    color: #eef;
+    text-align: center;
+}
+
+.switch{
+    padding: 5px;
+    margin: 0 auto;
+    background-color: rgb(22, 50, 119);
+    margin-bottom: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 3%;
+    text-align: center;
+  }
