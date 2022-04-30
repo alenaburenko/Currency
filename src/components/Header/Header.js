@@ -7,8 +7,8 @@ export const Header = ({ currencies }) => {
   const [amount2, setAmount2] = useState(1);
   useEffect(() => {
     if (!currencies) return;
-    setAmount1((currencies["EUR"] * currencies["UAH"]).toFixed(4));
-    setAmount2((currencies["USD"] * currencies["UAH"]).toFixed(4));
+    setAmount1(currencies["EUR"].toFixed(4));
+    setAmount2(currencies["USD"].toFixed(4));
   }, [currencies]);
 
   return (
@@ -17,9 +17,9 @@ export const Header = ({ currencies }) => {
         <h1>Currency Converter</h1>
         <div>
           <Flags.US title="United States" className="size" />
-          <span className="res"> {amount1} &#8372;</span>
+          <span className="res"> {amount2} &#8372;</span>
           <Flags.EU title="United States" className="size" />
-          <span className="res"> {amount2} &#8372; </span>
+          <span className="res"> {amount1} &#8372; </span>
         </div>
       </div>
     </>

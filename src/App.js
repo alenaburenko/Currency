@@ -7,7 +7,7 @@ import { HiSwitchHorizontal } from "react-icons/hi";
 
 function App() {
   const [amount1, setAmount1] = useState(1);
-  const [currency1, setCurrency1] = useState("USD");
+  const [currency1, setCurrency1] = useState("UAH");
   const [currency2, setCurrency2] = useState("EUR");
   const [rates, setRates] = useState(null);
 
@@ -16,10 +16,8 @@ function App() {
   }, []);
 
   const amount2 = useMemo(() => {
-    return rates
-      ? format((amount1 * rates[currency2]) / rates[currency1])
-      : "--";
-  }, [rates, amount1, format, currency2, currency1]);
+    return rates ? format(amount1 * rates[currency2]) : "--";
+  }, [rates, amount1, format, currency2]);
 
   const currenciesList = useMemo(() => {
     return rates ? Object.keys(rates) : [];
@@ -28,10 +26,15 @@ function App() {
   useEffect(() => {
     axios
       .get(
-        "http://data.fixer.io/api/latest?access_key=38d4b0353985af9f32997dc33ef45710"
+        // "http://data.fixer.io/api/latest?access_key=38d4b0353985af9f32997dc33ef45710"
+        "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json"
       )
       .then((response) => {
-        setRates(response.data.rates);
+        const rates = response.data.map(({ cc, rate }) => {
+          return { [cc]: rate };
+        });
+        const ratesO = Object.assign(...rates);
+        setRates(Object.assign(ratesO, { UAH: 1 }));
       });
   }, []);
 
@@ -49,7 +52,7 @@ function App() {
   }
 
   function handleAmount2Change(amount2) {
-    setAmount1(format((amount2 * rates[currency1]) / rates[currency2]));
+    setAmount1(format((amount2 * rates[currency2]) / rates[currency1]));
   }
 
   function handleCurrency2Change(currency2) {
